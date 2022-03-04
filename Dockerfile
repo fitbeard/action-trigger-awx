@@ -1,9 +1,5 @@
-FROM python:3.8-alpine
+FROM t42x/awxkit_base:v1
 
-ADD requirements.txt /requirements.txt
-RUN pip install --no-cache-dir -r /requirements.txt
-
-RUN apk update \
-  && apk upgrade \
-  && apk add bash \
-  && rm -rf /var/cache/*/*
+ADD entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
