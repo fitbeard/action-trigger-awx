@@ -1,0 +1,69 @@
+---
+name: Trigger AWX
+author: Tadas Sutkaitis
+description: Trigger resource on AWX or Ansible Tower
+branding:
+  color: red
+  icon: play-circle
+inputs:
+  tower_url:
+    description: "AWX or Ansible Tower URL."
+    required: true
+  tower_token:
+    description: "AWX or Ansible Tower Oauth token."
+    required: true
+  tower_verify_ssl:
+    required: false
+    default: "true"
+  resource_type:
+    description: "One of resource types: project, job_template or workflow_job_template."
+    required: true
+  resource_name:
+    description: "Name or ID of project, job_template or workflow_job_template."
+    required: true
+  job_type:
+    description: "Run or chek playbook."
+    required: false
+  limit:
+    description: "Host pattern that will be managed or affected by the playbook."
+    required: false
+  tags:
+    description: "Playbook tags to apply."
+    required: false
+  skip_tags:
+    description: "Playbook tags to skip."
+    required: false
+  timeout:
+    description: "If set with monitor, time out waiting on job completion."
+    required: false
+  inventory:
+    description: "Name or ID of the associated inventory."
+  required: false
+  branch:
+    description: "SCM branch to override."
+  required: false
+  monitor:
+    description: "Monitor job progress in realtime."
+    required: false
+    default: "true"
+  extra_vars:
+    description: "Pass extra command line variables to the playbook."
+    required: false
+runs:
+  using: docker
+  image: Dockerfile
+  env:
+    TOWER_HOST: ${{ inputs.tower_url }}
+    TOWER_OAUTH_TOKEN: ${{ inputs.tower_token }}
+    TOWER_VERIFY_SSL: ${{ inputs.tower_verify_ssl }}
+    RESOURCE_TYPE: ${{ inputs.resource_type }}
+    RESOURCE_NAME: ${{ inputs.resource_name }}
+    JOB_TYPE: ${{ inputs.job_type }}
+    LIMIT: ${{ inputs.limit }}
+    TAGS: ${{ inputs.tags }}
+    SKIP_TAGS: ${{ inputs.skip_tags }}
+    TIMEOUT: ${{ inputs.timeout }}
+    INVENTORY: ${{ inputs.inventory }}
+    BRANCH: ${{ inputs.branch }}
+    MONITOR: ${{ inputs.monitor }}
+    EXTRA_VARS: ${{ inputs.extra_vars }}
