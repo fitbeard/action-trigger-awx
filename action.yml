@@ -1,5 +1,5 @@
 ---
-name: Trigger AWX
+name: Trigger AWX and Ansible Tower resources
 author: Tadas Sutkaitis
 description: Trigger resource on AWX or Ansible Tower
 branding:
