@@ -38,10 +38,10 @@ inputs:
     required: false
   inventory:
     description: "Name or ID of the associated inventory."
-  required: false
+    required: false
   branch:
     description: "SCM branch to override."
-  required: false
+    required: false
   monitor:
     description: "Monitor job progress in realtime."
     required: false
