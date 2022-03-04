@@ -1,6 +1,6 @@
 # Github action for AWX and Ansible Tower resource triggering
 
-[![main](https://github.com/fitbeard/action-trigger-awx/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/fitbeard/action-trigger-awx/actions/workflows/main.yml)
+[![main](https://github.com/fitbeard/action-trigger-awx/workflows/main/badge.svg)](https://github.com/fitbeard/action-trigger-awx/actions?query=workflow%3Amain)
 
 This Github action aims to interact with AWX or Tower servers.
 
