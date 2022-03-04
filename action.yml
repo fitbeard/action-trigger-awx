@@ -51,7 +51,7 @@ inputs:
     required: false
 runs:
   using: docker
-  image: Dockerfile.action
+  image: ./Dockerfile.action
   env:
     TOWER_HOST: ${{ inputs.tower_url }}
     TOWER_OAUTH_TOKEN: ${{ inputs.tower_token }}
