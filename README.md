@@ -65,7 +65,7 @@ See [action.yml](action.yml)
           tags: "1,two,o_0"
           skip_tags: "nonsense"
 
-      - name: "Test AWX: Simple ob template without waiting"
+      - name: "Test AWX: Simple job template without waiting"
         uses: fitbeard/action-trigger-awx@v1
         with:
           tower_url: ${{ secrets.TOWER_HOST }}
