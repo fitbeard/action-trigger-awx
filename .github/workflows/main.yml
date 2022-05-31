@@ -23,5 +23,5 @@ jobs:
         with:
           context: .
           file: Dockerfile.base
-          tags: t42x/awxkit_base:latest,t42x/awxkit_base:${{ github.ref_name }}
+          tags: t42x/awxkit_base:${{ github.ref_name }}
           push: true
