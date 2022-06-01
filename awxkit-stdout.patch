@@ -1,0 +1,11 @@
+--- /usr/local/lib/python3.8/site-packages/awxkit/cli/stdout.py
++++ /usr/local/lib/python3.8/site-packages/awxkit/cli/stdout.py
+@@ -70,7 +70,7 @@
+
+ def monitor(response, session, print_stdout=True, timeout=None, interval=0.25):
+     get = response.url.get
+-    payload = {'order_by': 'start_line', 'no_truncate': True}
++    payload = {'order_by': 'start_line', 'no_truncate': True, 'page_size': 200}
+     if response.type == 'job':
+         events = response.related.job_events.get
+     else:

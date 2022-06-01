@@ -5,5 +5,8 @@ RUN pip install --no-cache-dir -r /requirements.txt
 
 RUN apk update \
   && apk upgrade \
-  && apk add bash \
+  && apk add bash patch \
   && rm -rf /var/cache/*/*
+
+ADD awxkit-stdout.patch /awxkit-stdout.patch
+RUN patch /usr/local/lib/python3.8/site-packages/awxkit/cli/stdout.py < /awxkit-stdout.patch
