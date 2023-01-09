@@ -2,26 +2,32 @@
 name: main
 
 on:
-  push:
-    tags:
-      - '*'
+  release:
+    types:
+      - published
 
 jobs:
   build:
-    runs-on:
-      - ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3.3.0
+
       - name: Login to DockerHub
-        uses: docker/login-action@v1
+        uses: docker/login-action@v2.1.0
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Generate image tag
+        id: image_tag
+        run: |
+          echo ::set-output name=tag::$(echo ${{ github.event.release.tag_name }} | sed 's/^v//')
+
       - name: Build && Push
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3.2.0
         with:
           context: .
           file: Dockerfile.base
-          tags: t42x/awxkit_base:${{ github.ref_name }}
+          tags: t42x/awxkit_base:${{ steps.image_tag.outputs.tag }}
           push: true
