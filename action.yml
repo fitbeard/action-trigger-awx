@@ -13,6 +13,7 @@ inputs:
     description: "AWX or Ansible Tower Oauth token."
     required: true
   tower_verify_ssl:
+    description: "Require valid SSL certificate"
     required: false
     default: "true"
   resource_type:
