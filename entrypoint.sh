@@ -56,9 +56,9 @@ else
 fi
 
 if [ -z "$TIMEOUT" ]; then
-  TIMEOUT_VALUE="--timeout 3600"
+  TIMEOUT_VALUE="--action-timeout 3600"
 else
-  TIMEOUT_VALUE="--timeout $TIMEOUT"
+  TIMEOUT_VALUE="--action-timeout $TIMEOUT"
 fi
 
 if [ -z "$INVENTORY" ]; then

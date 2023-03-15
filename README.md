@@ -6,6 +6,10 @@ This Github action aims to interact with AWX or Tower servers.
 
 It connects to an AWX or Tower server and launches a job or workflow_job template or updates project.
 
+> **Note**
+>
+> For best compatibility and if it possible always use the identical version of this action to your installed AWX version.
+
 ## Usage
 
 See [action.yml](action.yml)
@@ -17,7 +21,7 @@ See [action.yml](action.yml)
     runs-on: ubuntu-latest
     steps:
       - name: "Test AWX: Simple job template"
-        uses: fitbeard/action-trigger-awx@v1
+        uses: fitbeard/action-trigger-awx@v21.13.0
         with:
           tower_url: ${{ secrets.TOWER_HOST }}
           tower_token: ${{ secrets.TOWER_OAUTH_TOKEN }}
@@ -25,7 +29,7 @@ See [action.yml](action.yml)
           resource_name: actions-awxkit-test
 
       - name: "Test AWX: Simple workflow template"
-        uses: fitbeard/action-trigger-awx@v1
+        uses: fitbeard/action-trigger-awx@v21.13.0
         with:
           tower_url: ${{ secrets.TOWER_HOST }}
           tower_token: ${{ secrets.TOWER_OAUTH_TOKEN }}
@@ -33,7 +37,7 @@ See [action.yml](action.yml)
           resource_name: actions-awxkit-workflow-test
 
       - name: "Test AWX: Project update"
-        uses: fitbeard/action-trigger-awx@v1
+        uses: fitbeard/action-trigger-awx@v21.13.0
         with:
           tower_url: ${{ secrets.TOWER_HOST }}
           tower_token: ${{ secrets.TOWER_OAUTH_TOKEN }}
@@ -41,7 +45,7 @@ See [action.yml](action.yml)
           resource_name: ansible-project
 
       - name: "Test AWX: Random options job template 1"
-        uses: fitbeard/action-trigger-awx@v1
+        uses: fitbeard/action-trigger-awx@v21.13.0
         with:
           tower_url: ${{ secrets.TOWER_HOST }}
           tower_token: ${{ secrets.TOWER_OAUTH_TOKEN }}
@@ -52,7 +56,7 @@ See [action.yml](action.yml)
           timeout: 300
 
       - name: "Test AWX: Random options job template 2"
-        uses: fitbeard/action-trigger-awx@v1
+        uses: fitbeard/action-trigger-awx@v21.13.0
         with:
           tower_url: ${{ secrets.TOWER_HOST }}
           tower_token: ${{ secrets.TOWER_OAUTH_TOKEN }}
@@ -66,7 +70,7 @@ See [action.yml](action.yml)
           skip_tags: "nonsense"
 
       - name: "Test AWX: Simple job template without waiting"
-        uses: fitbeard/action-trigger-awx@v1
+        uses: fitbeard/action-trigger-awx@v21.13.0
         with:
           tower_url: ${{ secrets.TOWER_HOST }}
           tower_token: ${{ secrets.TOWER_OAUTH_TOKEN }}
