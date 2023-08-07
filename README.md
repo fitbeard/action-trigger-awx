@@ -28,6 +28,15 @@ See [action.yml](action.yml)
           resource_type: job_template
           resource_name: actions-awxkit-test
 
+      - name: "Test AWX: Simple job template - specify credentials"
+        uses: fitbeard/action-trigger-awx@v22.0.0
+        with:
+          tower_url: ${{ secrets.TOWER_HOST }}
+          tower_token: ${{ secrets.TOWER_OAUTH_TOKEN }}
+          resource_type: job_template
+          resource_name: actions-awxkit-test
+          credentials: "test-credential"
+
       - name: "Test AWX: Simple workflow template"
         uses: fitbeard/action-trigger-awx@v22.0.0
         with:
