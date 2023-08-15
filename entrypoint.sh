@@ -115,6 +115,8 @@ elif [ $RESOURCE_TYPE = "workflow_job_template" ]; then
   ACTION="workflow_job_templates launch"
 elif [ $RESOURCE_TYPE = "project" ]; then
   ACTION="projects update"
+elif [ $RESOURCE_TYPE = "inventory_sources" ]; then
+  ACTION="inventory_sources update"
 else
   echo "Unknown resource type. Exiting."
   exit 1
