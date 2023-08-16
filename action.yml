@@ -17,10 +17,10 @@ inputs:
     required: false
     default: "true"
   resource_type:
-    description: "One of resource types: project, job_template, inventory_sources or workflow_job_template."
+    description: "One of resource types: project, job_template, inventory_source or workflow_job_template."
     required: true
   resource_name:
-    description: "Name or ID of project, job_template, inventory_sources or workflow_job_template."
+    description: "Name or ID of project, job_template, inventory_source or workflow_job_template."
     required: true
   job_type:
     description: "Run or chek playbook."
