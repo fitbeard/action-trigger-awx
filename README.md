@@ -53,6 +53,14 @@ See [action.yml](action.yml)
           resource_type: project
           resource_name: ansible-project
 
+      - name: "Test AWX: Inventory Source update"
+        uses: fitbeard/action-trigger-awx@v22.6.0
+        with:
+          tower_url: ${{ secrets.TOWER_HOST }}
+          tower_token: ${{ secrets.TOWER_OAUTH_TOKEN }}
+          resource_type: inventory_source
+          resource_name: inventory-source-name
+
       - name: "Test AWX: Random options job template 1"
         uses: fitbeard/action-trigger-awx@v22.6.0
         with:
