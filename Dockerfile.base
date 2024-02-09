@@ -1,4 +1,4 @@
-FROM python:3.10-alpine
+FROM python:3.11-alpine
 
 ADD requirements.txt /requirements.txt
 RUN pip install --no-cache-dir -r /requirements.txt
