@@ -4,22 +4,22 @@ set -e
 
 export PYTHONUNBUFFERED=1
 
-if [ -z "$TOWER_HOST" ]; then
-  echo "Tower host is not set. Exiting."
+if [ -z "$CONTROLLER_HOST" ]; then
+  echo "Controller host is not set. Exiting."
   exit 1
 fi
 
-if [ -z "$TOWER_OAUTH_TOKEN" ]; then
-  echo "Tower oauth token is not set. Exiting."
+if [ -z "$CONTROLLER_OAUTH_TOKEN" ]; then
+  echo "Controller oauth token is not set. Exiting."
   exit 1
 fi
 
-if [ -z "$TOWER_VERIFY_SSL" ]; then
-  TOWER_VERIFY_SSL="true"
-elif [ $TOWER_VERIFY_SSL = "true" ]; then
-  TOWER_VERIFY_SSL="true"
-elif [ $TOWER_VERIFY_SSL = "false" ]; then
-  TOWER_VERIFY_SSL="false"
+if [ -z "$CONTROLLER_VERIFY_SSL" ]; then
+  CONTROLLER_VERIFY_SSL="true"
+elif [ $CONTROLLER_VERIFY_SSL = "true" ]; then
+  CONTROLLER_VERIFY_SSL="true"
+elif [ $CONTROLLER_VERIFY_SSL = "false" ]; then
+  CONTROLLER_VERIFY_SSL="false"
 else
   echo "Unknown ssl verify value. Exiting."
   exit 1

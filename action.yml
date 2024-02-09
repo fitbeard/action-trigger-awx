@@ -1,18 +1,18 @@
 ---
-name: Trigger AWX and Ansible Tower resources
+name: Trigger AWX and Ansible Automation Platform Controller resources
 author: Tadas Sutkaitis
-description: Trigger resource on AWX or Ansible Tower
+description: Trigger resource on AWX or Ansible Automation Platform Controller
 branding:
   color: red
   icon: play-circle
 inputs:
-  tower_url:
-    description: "AWX or Ansible Tower URL."
+  controller_host:
+    description: "AWX or Ansible Automation Platform Controller URL."
     required: true
-  tower_token:
-    description: "AWX or Ansible Tower Oauth token."
+  controller_oauth_token:
+    description: "AWX or Ansible Automation Platform Controller Oauth token."
     required: true
-  tower_verify_ssl:
+  controller_verify_ssl:
     description: "Require valid SSL certificate"
     required: false
     default: "true"
@@ -57,9 +57,9 @@ runs:
   using: docker
   image: Dockerfile
   env:
-    TOWER_HOST: ${{ inputs.tower_url }}
-    TOWER_OAUTH_TOKEN: ${{ inputs.tower_token }}
-    TOWER_VERIFY_SSL: ${{ inputs.tower_verify_ssl }}
+    CONTROLLER_HOST: ${{ inputs.controller_host }}
+    CONTROLLER_OAUTH_TOKEN: ${{ inputs.controller_oauth_token }}
+    CONTROLLER_VERIFY_SSL: ${{ inputs.controller_verify_ssl }}
     RESOURCE_TYPE: ${{ inputs.resource_type }}
     RESOURCE_NAME: ${{ inputs.resource_name }}
     JOB_TYPE: ${{ inputs.job_type }}
