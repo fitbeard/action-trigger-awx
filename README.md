@@ -21,7 +21,7 @@ See [action.yml](action.yml)
     runs-on: ubuntu-latest
     steps:
       - name: "Test AWX: Simple job template"
-        uses: fitbeard/action-trigger-awx@v23.7.0
+        uses: fitbeard/action-trigger-awx@v24.2.0
         with:
           controller_host: ${{ secrets.CONTROLLER_HOST }}
           controller_oauth_token: ${{ secrets.CONTROLLER_OAUTH_TOKEN }}
@@ -29,7 +29,7 @@ See [action.yml](action.yml)
           resource_name: actions-awxkit-test
 
       - name: "Test AWX: Simple job template - specify credentials"
-        uses: fitbeard/action-trigger-awx@v23.7.0
+        uses: fitbeard/action-trigger-awx@v24.2.0
         with:
           controller_host: ${{ secrets.CONTROLLER_HOST }}
           controller_oauth_token: ${{ secrets.CONTROLLER_OAUTH_TOKEN }}
@@ -38,7 +38,7 @@ See [action.yml](action.yml)
           credentials: "test-credential"
 
       - name: "Test AWX: Simple workflow template"
-        uses: fitbeard/action-trigger-awx@v23.7.0
+        uses: fitbeard/action-trigger-awx@v24.2.0
         with:
           controller_host: ${{ secrets.CONTROLLER_HOST }}
           controller_oauth_token: ${{ secrets.CONTROLLER_OAUTH_TOKEN }}
@@ -46,7 +46,7 @@ See [action.yml](action.yml)
           resource_name: actions-awxkit-workflow-test
 
       - name: "Test AWX: Project update"
-        uses: fitbeard/action-trigger-awx@v23.7.0
+        uses: fitbeard/action-trigger-awx@v24.2.0
         with:
           controller_host: ${{ secrets.CONTROLLER_HOST }}
           controller_oauth_token: ${{ secrets.CONTROLLER_OAUTH_TOKEN }}
@@ -54,7 +54,7 @@ See [action.yml](action.yml)
           resource_name: ansible-project
 
       - name: "Test AWX: Inventory Source update"
-        uses: fitbeard/action-trigger-awx@v23.7.0
+        uses: fitbeard/action-trigger-awx@v24.2.0
         with:
           controller_host: ${{ secrets.CONTROLLER_HOST }}
           controller_oauth_token: ${{ secrets.CONTROLLER_OAUTH_TOKEN }}
@@ -62,7 +62,7 @@ See [action.yml](action.yml)
           resource_name: inventory-source-name
 
       - name: "Test AWX: Random options job template 1"
-        uses: fitbeard/action-trigger-awx@v23.7.0
+        uses: fitbeard/action-trigger-awx@v24.2.0
         with:
           controller_host: ${{ secrets.CONTROLLER_HOST }}
           controller_oauth_token: ${{ secrets.CONTROLLER_OAUTH_TOKEN }}
@@ -73,7 +73,7 @@ See [action.yml](action.yml)
           timeout: 300
 
       - name: "Test AWX: Random options job template 2"
-        uses: fitbeard/action-trigger-awx@v23.7.0
+        uses: fitbeard/action-trigger-awx@v24.2.0
         with:
           controller_host: ${{ secrets.CONTROLLER_HOST }}
           controller_oauth_token: ${{ secrets.CONTROLLER_OAUTH_TOKEN }}
@@ -87,7 +87,7 @@ See [action.yml](action.yml)
           skip_tags: "nonsense"
 
       - name: "Test AWX: Simple job template without waiting"
-        uses: fitbeard/action-trigger-awx@v23.7.0
+        uses: fitbeard/action-trigger-awx@v24.2.0
         with:
           controller_host: ${{ secrets.CONTROLLER_HOST }}
           controller_oauth_token: ${{ secrets.CONTROLLER_OAUTH_TOKEN }}
