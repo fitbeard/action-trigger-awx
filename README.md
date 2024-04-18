@@ -20,13 +20,18 @@ See [action.yml](action.yml)
   awx-examples:
     runs-on: ubuntu-latest
     steps:
-      - name: "Test AWX: Simple job template"
+      - name: "Test AWX: Simple job template with GH step id to extract AWX job id for the next step"
         uses: fitbeard/action-trigger-awx@v24.2.0
+        id: example_id
         with:
           controller_host: ${{ secrets.CONTROLLER_HOST }}
           controller_oauth_token: ${{ secrets.CONTROLLER_OAUTH_TOKEN }}
           resource_type: job_template
           resource_name: actions-awxkit-test
+
+      - name: "Output AWX job id"
+        run: |
+          echo ${{ steps.example_id.outputs.job_id }}
 
       - name: "Test AWX: Simple job template - specify credentials"
         uses: fitbeard/action-trigger-awx@v24.2.0
