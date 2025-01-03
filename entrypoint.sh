@@ -124,5 +124,18 @@ fi
 
 echo "awx ${ACTION} ${RESOURCE_NAME} -f jq --filter .id ${MONITOR_VALUE} ${TIMEOUT_VALUE} ${LIMIT_VALUE} ${INVENTORY_VALUE} ${CREDENTIALS_VALUE} ${EXTRA_VARS_VALUE} ${BRANCH_VALUE} ${JOB_TYPE_VALUE} ${TAGS_VALUE} ${SKIP_TAGS_VALUE}"
 echo "awx ${ACTION} ${RESOURCE_NAME} -f jq --filter .id ${MONITOR_VALUE} ${TIMEOUT_VALUE} ${LIMIT_VALUE} ${INVENTORY_VALUE} ${CREDENTIALS_VALUE} ${EXTRA_VARS_VALUE} ${BRANCH_VALUE} ${JOB_TYPE_VALUE} ${TAGS_VALUE} ${SKIP_TAGS_VALUE}" | bash | tee awxkit-output.log
-echo job_id="$(sed -e 's/[[:space:]]*$//' awxkit-output.log | awk 'NF' | tail -n 1)" >> $GITHUB_OUTPUT
-echo AWX_JOB_ID="$(sed -e 's/[[:space:]]*$//' awxkit-output.log | awk 'NF' | tail -n 1)" >> awx.env # This is for a 'dotenv' use on Gitlab pipelines
+
+# Capture the exit code of the 'bash' command
+bash_exit_code=${PIPESTATUS[1]}
+
+# Validate the exit code and exit if non-zero
+if [ "$bash_exit_code" -ne 0 ]; then
+  echo "AWX command failed with exit code $bash_exit_code" >&2
+  exit "$bash_exit_code"
+fi
+
+if [ -z "$GITLAB_CI" ]; then
+  echo job_id="$(sed -e 's/[[:space:]]*$//' awxkit-output.log | awk 'NF' | tail -n 1)" >> $GITHUB_OUTPUT
+else
+  echo AWX_JOB_ID="$(sed -e 's/[[:space:]]*$//' awxkit-output.log | awk 'NF' | tail -n 1)" >> awx.env # This is for a 'dotenv' use in Gitlab pipelines
+fi

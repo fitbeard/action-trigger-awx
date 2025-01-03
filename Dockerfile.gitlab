@@ -16,6 +16,7 @@ RUN git -C $(/var/lib/awx/bin/python -c "import sysconfig; print(sysconfig.get_p
 FROM python:3.11-alpine
 
 ENV PATH=/var/lib/awx/bin:$PATH
+ENV GITLAB_CI=true
 
 RUN apk update \
   && apk upgrade \
@@ -24,5 +25,5 @@ RUN apk update \
 
 COPY --from=build --link /var/lib/awx /var/lib/awx
 
-ADD entrypoint.sh /run.sh
-RUN chmod +x /run.sh
+ADD entrypoint.sh /usr/local/bin/awx-ci
+RUN chmod +x /usr/local/bin/awx-ci
