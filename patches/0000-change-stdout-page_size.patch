@@ -1,0 +1,19 @@
+From 41c77edbaee3e5ef60179b1bc31331906b50362f Mon Sep 17 00:00:00 2001
+From: Tadas Sutkaitis <tadasas@gmail.com>
+Date: Fri, 3 Jan 2025 18:22:45 +0200
+Subject: [PATCH] Add changes for stdout page_size
+---
+
+diff --git a/awxkit/cli/stdout.py b/awxkit/cli/stdout.py
+index 0ed68c1889..8145cfbd99 100644
+--- a/awxkit/cli/stdout.py
++++ b/awxkit/cli/stdout.py
+@@ -71,7 +71,7 @@ def monitor_workflow(response, session, print_stdout=True, action_timeout=None,
+ 
+ def monitor(response, session, print_stdout=True, action_timeout=None, interval=5):
+     get = response.url.get
+-    payload = {'order_by': 'start_line', 'no_truncate': True}
++    payload = {'order_by': 'start_line', 'no_truncate': True, 'page_size': 200}
+     if response.type == 'job':
+         events = response.related.job_events.get
+     else:

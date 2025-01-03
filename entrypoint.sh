@@ -125,3 +125,4 @@ fi
 echo "awx ${ACTION} ${RESOURCE_NAME} -f jq --filter .id ${MONITOR_VALUE} ${TIMEOUT_VALUE} ${LIMIT_VALUE} ${INVENTORY_VALUE} ${CREDENTIALS_VALUE} ${EXTRA_VARS_VALUE} ${BRANCH_VALUE} ${JOB_TYPE_VALUE} ${TAGS_VALUE} ${SKIP_TAGS_VALUE}"
 echo "awx ${ACTION} ${RESOURCE_NAME} -f jq --filter .id ${MONITOR_VALUE} ${TIMEOUT_VALUE} ${LIMIT_VALUE} ${INVENTORY_VALUE} ${CREDENTIALS_VALUE} ${EXTRA_VARS_VALUE} ${BRANCH_VALUE} ${JOB_TYPE_VALUE} ${TAGS_VALUE} ${SKIP_TAGS_VALUE}" | bash | tee awxkit-output.log
 echo job_id="$(sed -e 's/[[:space:]]*$//' awxkit-output.log | awk 'NF' | tail -n 1)" >> $GITHUB_OUTPUT
+echo AWX_JOB_ID="$(sed -e 's/[[:space:]]*$//' awxkit-output.log | awk 'NF' | tail -n 1)" >> awx.env # This is for a 'dotenv' use on Gitlab pipelines
