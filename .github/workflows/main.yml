@@ -24,10 +24,18 @@ jobs:
         run: |
           echo tag=$(echo ${{ github.event.release.tag_name }} | sed 's/^v//') >> $GITHUB_OUTPUT
 
-      - name: Build && Push
+      - name: Build & Push Github action base image
         uses: docker/build-push-action@v6.10.0
         with:
           context: .
           file: Dockerfile.base
           tags: t42x/awxkit_base:${{ steps.image_tag.outputs.tag }}
+          push: true
+
+      - name: Build & Push Gitlab image
+        uses: docker/build-push-action@v6.10.0
+        with:
+          context: .
+          file: Dockerfile.gitlab
+          tags: t42x/awxkit_gitlab:${{ steps.image_tag.outputs.tag }}
           push: true

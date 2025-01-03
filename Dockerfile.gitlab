@@ -23,3 +23,6 @@ RUN apk update \
   && rm -rf /var/cache/*/*
 
 COPY --from=build --link /var/lib/awx /var/lib/awx
+
+ADD entrypoint.sh /run.sh
+RUN chmod +x /run.sh
