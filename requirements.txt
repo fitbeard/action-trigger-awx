@@ -1,2 +1,3 @@
-awxkit==24.6.1
+# Newest commit on the awxkit subdirectory as last checked on 2026-09-20: https://github.com/ansible/awx/tree/devel/awxkit
+awxkit @ git+https://github.com/ansible/awx.git@bbda905e0069dde6abe625e005dd79a058a76fdb#subdirectory=awxkit
 jq

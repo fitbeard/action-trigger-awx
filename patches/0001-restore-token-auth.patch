@@ -1,0 +1,101 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Tadas Sutkaitis <tadasas@gmail.com>
+Date: Sat, 20 Sep 2026 16:01:13 +0300
+Subject: [PATCH] Restore OAuth2 token authentication for the awx CLI
+
+Re-adds --conf.token (default from CONTROLLER_OAUTH_TOKEN / TOWER_OAUTH_TOKEN)
+and the Bearer-token auth path that were removed from awxkit devel.
+
+Based on https://github.com/ansible/awx/commit/994a2b3c046bd7f960eb2aedbee754fe61103383
+(#16281 "Restoration of Token Authentication for AWX CLI"), which was reverted
+upstream by #16293. Paths are adjusted to the installed package layout
+(awxkit/... instead of awxkit/awxkit/...). Token takes precedence over
+username/password.
+---
+
+diff --git a/awxkit/api/client.py b/awxkit/api/client.py
+index c650281..1e90113 100644
+--- a/awxkit/api/client.py
++++ b/awxkit/api/client.py
+@@ -12,6 +12,15 @@ class ConnectionException(exc.Common):
+     pass
+
+
++class TokenAuth(requests.auth.AuthBase):
++    def __init__(self, token):
++        self.token = token
++
++    def __call__(self, request):
++        request.headers['Authorization'] = 'Bearer {0.token}'.format(self)
++        return request
++
++
+ def log_elapsed(r, *args, **kwargs):  # requests hook to display API elapsed time
+     log.debug('"{0.request.method} {0.url}" elapsed: {0.elapsed}'.format(r))
+
+@@ -37,7 +46,7 @@ class Connection(object):
+         self.get(config.api_base_path)  # this causes a cookie w/ the CSRF token to be set
+         return dict(next=next)
+
+-    def login(self, username=None, password=None, **kwargs):
++    def login(self, username=None, password=None, token=None, **kwargs):
+         if username and password:
+             _next = kwargs.get('next')
+             if _next:
+@@ -57,6 +66,8 @@ class Connection(object):
+                 self.uses_session_cookie = True
+             else:
+                 self.session.auth = (username, password)
++        elif token:
++            self.session.auth = TokenAuth(token)
+         else:
+             self.session.auth = None
+
+diff --git a/awxkit/cli/client.py b/awxkit/cli/client.py
+index e3e7611..2e1a29a 100644
+--- a/awxkit/cli/client.py
++++ b/awxkit/cli/client.py
+@@ -130,12 +130,23 @@ class CLI(object):
+     def authenticate(self):
+         """Configure the current session for authentication.
+
+-        Uses Basic authentication when AWXKIT_FORCE_BASIC_AUTH environment variable
+-        is set to true, otherwise defaults to session-based authentication.
++        Authentication priority:
++        1. Token authentication (if --conf.token provided)
++        2. Basic authentication (if AWXKIT_FORCE_BASIC_AUTH=true)
++        3. Session-based authentication (default)
++
+
+         For AAP Gateway environments, set AWXKIT_FORCE_BASIC_AUTH=true to bypass
+-        session login restrictions.
++        session login restrictions when using username/password.
++
+         """
++        # Token authentication (if token is provided)
++        token = self.get_config('token')
++        if token:
++            config.use_sessions = False
++            self.root.connection.login(None, None, token=token)
++            return
++
+         # Check if Basic auth is forced via environment variable
+         if config.get('force_basic_auth', False):
+             config.use_sessions = False
+diff --git a/awxkit/cli/format.py b/awxkit/cli/format.py
+index 5e81e32..67aa753 100644
+--- a/awxkit/cli/format.py
++++ b/awxkit/cli/format.py
+@@ -59,6 +59,12 @@ def add_authentication_arguments(parser, env):
+         default=env.get('CONTROLLER_PASSWORD', env.get('TOWER_PASSWORD', config_password)),
+         metavar='TEXT',
+     )
++    auth.add_argument(
++        '--conf.token',
++        default=env.get('CONTROLLER_OAUTH_TOKEN', env.get('TOWER_OAUTH_TOKEN', None)),
++        metavar='TEXT',
++        help='OAuth2 token for authentication (takes precedence over username/password)',
++    )
+
+     auth.add_argument(
+         '-k',

@@ -10,12 +10,24 @@ inputs:
     description: "AWX or Ansible Automation Platform Controller URL."
     required: true
   controller_oauth_token:
-    description: "AWX or Ansible Automation Platform Controller Oauth token."
-    required: true
+    description: "OAuth2 token for authentication. Provide this OR controller_username + controller_password. Takes precedence over username/password."
+    required: false
+  controller_username:
+    description: "Username for authentication. Requires controller_password. Ignored when controller_oauth_token is set."
+    required: false
+  controller_password:
+    description: "Password for authentication. Requires controller_username. Ignored when controller_oauth_token is set."
+    required: false
+  awxkit_force_basic_auth:
+    description: "Set to 'true' to use HTTP Basic auth instead of session login for username/password. Required for AAP 2.5+ behind the gateway."
+    required: false
   controller_verify_ssl:
     description: "Require valid SSL certificate"
     required: false
     default: "true"
+  awxkit_api_base_path:
+    description: "Controller API prefix. Leave unset for AWX / standalone controller (awxkit default /api/). Set to /api/controller/ for AAP 2.5+ behind the gateway."
+    required: false
   resource_type:
     description: "One of resource types: project, job_template, inventory_source or workflow_job_template."
     required: true
@@ -35,7 +47,7 @@ inputs:
     description: "Playbook tags to skip."
     required: false
   timeout:
-    description: "If set with monitor, time out waiting on job completion."
+    description: "If set with monitor, time out waiting on job completion. Positive integer of seconds."
     required: false
   inventory:
     description: "Name or ID of the associated inventory."
@@ -53,13 +65,20 @@ inputs:
   extra_vars:
     description: "Pass extra command line variables to the playbook."
     required: false
+outputs:
+  job_id:
+    description: "Id of the launched AWX job / update."
 runs:
   using: docker
-  image: Dockerfile
+  image: Dockerfile.action
   env:
     CONTROLLER_HOST: ${{ inputs.controller_host }}
     CONTROLLER_OAUTH_TOKEN: ${{ inputs.controller_oauth_token }}
+    CONTROLLER_USERNAME: ${{ inputs.controller_username }}
+    CONTROLLER_PASSWORD: ${{ inputs.controller_password }}
+    AWXKIT_FORCE_BASIC_AUTH: ${{ inputs.awxkit_force_basic_auth }}
     CONTROLLER_VERIFY_SSL: ${{ inputs.controller_verify_ssl }}
+    AWXKIT_API_BASE_PATH: ${{ inputs.awxkit_api_base_path }}
     RESOURCE_TYPE: ${{ inputs.resource_type }}
     RESOURCE_NAME: ${{ inputs.resource_name }}
     JOB_TYPE: ${{ inputs.job_type }}
