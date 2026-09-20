@@ -3,4 +3,8 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: weekly
+      day: sunday
+      time: "16:00"
+    commit-message:
+      prefix: "chore(deps)"

@@ -1,0 +1,1 @@
+FROM docker.io/t42x/awxkit:26.0.0
