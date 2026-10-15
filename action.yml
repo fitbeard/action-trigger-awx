@@ -62,6 +62,9 @@ inputs:
     description: "Monitor job progress in realtime."
     required: false
     default: "true"
+  interval:
+    description: "Seconds between API polls while monitoring (passed as --interval). Only effective with monitor; awxkit floors it at 2.5."
+    required: false
   extra_vars:
     description: "Pass extra command line variables to the playbook."
     required: false
@@ -90,4 +93,5 @@ runs:
     CREDENTIALS: ${{ inputs.credentials }}
     BRANCH: ${{ inputs.branch }}
     MONITOR: ${{ inputs.monitor }}
+    INTERVAL: ${{ inputs.interval }}
     EXTRA_VARS: ${{ inputs.extra_vars }}

@@ -26,6 +26,7 @@ See [action.yml](action.yml).
 | `controller_verify_ssl`  |    no    | `true`  | `true` / `false` — verify the controller's TLS certificate.                 |
 | `awxkit_api_base_path`   |    no    | —       | Controller API prefix. Leave unset for AWX / standalone controller (awxkit default `/api/`). Set to `/api/controller/` for AAP 2.5+ behind the gateway. |
 | `monitor`                |    no    | `true`  | `true` waits for completion (streams output); `false` returns immediately.   |
+| `interval`               |    no    | `5`     | Seconds between API polls while monitoring. Only effective with monitor; awxkit floors it at 2.5. |
 | `timeout`                |    no    | `3600`  | Max seconds to wait for the job — a positive integer (passed as `--action-timeout`). `0` is rejected, since awxkit would treat it as "no timeout" (unbounded wait). |
 | `job_type`               |    no    | —       | `run` or `check` (job templates).                                           |
 | `limit`                  |    no    | —       | Host pattern to limit the run.                                              |
@@ -57,7 +58,7 @@ See [action.yml](action.yml).
     runs-on: ubuntu-latest
     steps:
       - name: "Simple job template (capture the job id for the next step)"
-        uses: fitbeard/action-trigger-awx@v26.0.0
+        uses: fitbeard/action-trigger-awx@v26.1.0
         id: example_id
         with:
           controller_host: ${{ secrets.CONTROLLER_HOST }}
@@ -69,7 +70,7 @@ See [action.yml](action.yml).
         run: echo "${{ steps.example_id.outputs.job_id }}"
 
       - name: "Job template - specify credentials"
-        uses: fitbeard/action-trigger-awx@v26.0.0
+        uses: fitbeard/action-trigger-awx@v26.1.0
         with:
           controller_host: ${{ secrets.CONTROLLER_HOST }}
           controller_oauth_token: ${{ secrets.CONTROLLER_OAUTH_TOKEN }}
@@ -78,7 +79,7 @@ See [action.yml](action.yml).
           credentials: "test-credential"
 
       - name: "Workflow job template"
-        uses: fitbeard/action-trigger-awx@v26.0.0
+        uses: fitbeard/action-trigger-awx@v26.1.0
         with:
           controller_host: ${{ secrets.CONTROLLER_HOST }}
           controller_oauth_token: ${{ secrets.CONTROLLER_OAUTH_TOKEN }}
@@ -86,7 +87,7 @@ See [action.yml](action.yml).
           resource_name: actions-awxkit-workflow-test
 
       - name: "Project update"
-        uses: fitbeard/action-trigger-awx@v26.0.0
+        uses: fitbeard/action-trigger-awx@v26.1.0
         with:
           controller_host: ${{ secrets.CONTROLLER_HOST }}
           controller_oauth_token: ${{ secrets.CONTROLLER_OAUTH_TOKEN }}
@@ -94,7 +95,7 @@ See [action.yml](action.yml).
           resource_name: ansible-project
 
       - name: "Inventory source update"
-        uses: fitbeard/action-trigger-awx@v26.0.0
+        uses: fitbeard/action-trigger-awx@v26.1.0
         with:
           controller_host: ${{ secrets.CONTROLLER_HOST }}
           controller_oauth_token: ${{ secrets.CONTROLLER_OAUTH_TOKEN }}
@@ -102,7 +103,7 @@ See [action.yml](action.yml).
           resource_name: inventory-source-name
 
       - name: "Job template with extra options"
-        uses: fitbeard/action-trigger-awx@v26.0.0
+        uses: fitbeard/action-trigger-awx@v26.1.0
         with:
           controller_host: ${{ secrets.CONTROLLER_HOST }}
           controller_oauth_token: ${{ secrets.CONTROLLER_OAUTH_TOKEN }}
@@ -117,7 +118,7 @@ See [action.yml](action.yml).
           timeout: 300
 
       - name: "Fire-and-forget (do not wait for the job)"
-        uses: fitbeard/action-trigger-awx@v26.0.0
+        uses: fitbeard/action-trigger-awx@v26.1.0
         with:
           controller_host: ${{ secrets.CONTROLLER_HOST }}
           controller_oauth_token: ${{ secrets.CONTROLLER_OAUTH_TOKEN }}
@@ -126,7 +127,7 @@ See [action.yml](action.yml).
           monitor: "false"
 
       - name: "AAP 2.5+ behind the gateway"
-        uses: fitbeard/action-trigger-awx@v26.0.0
+        uses: fitbeard/action-trigger-awx@v26.1.0
         with:
           controller_host: ${{ secrets.CONTROLLER_HOST }}
           controller_oauth_token: ${{ secrets.CONTROLLER_OAUTH_TOKEN }}
