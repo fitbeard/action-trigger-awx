@@ -133,6 +133,10 @@ if [ -n "$SKIP_TAGS" ]; then
   AWX_ARGS+=(--skip_tags "$SKIP_TAGS")
 fi
 
+if [ -n "$INTERVAL" ]; then
+  AWX_ARGS+=(--interval "$INTERVAL")
+fi
+
 if [ -n "$JOB_TYPE" ]; then
   case "$JOB_TYPE" in
     run|check) AWX_ARGS+=(--job_type "$JOB_TYPE") ;;
